@@ -1,6 +1,7 @@
 local core_mainmenu = require("core_mainmenu")
 local lib_helpers = require("solylib.helpers")
 local lib_characters = require("solylib.characters")
+local lib_menu = require("solylib.menu")
 
 local enableAddon = true
 
@@ -28,12 +29,27 @@ local function presentDFReady()
     end
 end
 
+local function shouldBeDisplay()
+    if lib_menu.IsSymbolChatOpen() then
+        return false
+    end
+    if lib_menu.IsMenuOpen() then
+        return false
+    end
+    if lib_menu.IsMenuUnavailable() then
+        return false
+    end
+    return true
+end
+
 local function present()
     if enableAddon == false then
         return
     end
 
-    presentDFReady()
+    if shouldBeDisplay() ~= false then
+        presentDFReady()
+    end
 end
 
 local function init()
