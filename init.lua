@@ -39,6 +39,9 @@ local function shouldBeDisplay()
     if lib_menu.IsMenuUnavailable() then
         return false
     end
+    if lib_characters.GetCurrentFloorSelf() == 0 then
+        return false
+    end
     return true
 end
 
