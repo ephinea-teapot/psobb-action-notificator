@@ -14,10 +14,14 @@ local function displayDFReady()
 end
 
 local function presentDFReady()
-    local address = lib_characters.GetPlayer(0)
-    if address ~= 0 then
-        local hp = lib_characters.GetPlayerHP(address)
-        local mhp = lib_characters.GetPlayerMaxHP(address)
+    local _PlayerArray = 0x00A94254
+    local _PlayerIndex = 0x00A9C4F4
+    local playerIndex = pso.read_u32(_PlayerIndex)
+    local playerAddr = pso.read_u32(_PlayerArray + 4 * playerIndex)
+
+    if playerAddr ~= 0 then
+        local hp = lib_characters.GetPlayerHP(playerAddr)
+        local mhp = lib_characters.GetPlayerMaxHP(playerAddr)
         if (hp / mhp) < 0.125 then
             displayDFReady()
         end
