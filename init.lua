@@ -23,7 +23,7 @@ local function presentDFReady()
     if playerAddr ~= 0 then
         local hp = lib_characters.GetPlayerHP(playerAddr)
         local mhp = lib_characters.GetPlayerMaxHP(playerAddr)
-        if (hp / mhp) < 0.125 then
+        if 0 < hp and (hp / mhp) < 0.125 then
             displayDFReady()
         end
     end
