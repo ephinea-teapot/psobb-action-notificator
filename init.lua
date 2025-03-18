@@ -31,10 +31,10 @@ end
 
 local function shouldBeDisplay()
     if lib_menu.IsSymbolChatOpen() then
-        return false
+        return true
     end
     if lib_menu.IsMenuOpen() then
-        return false
+        return true
     end
     if lib_menu.IsMenuUnavailable() then
         return false
