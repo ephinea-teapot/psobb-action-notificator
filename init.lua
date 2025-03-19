@@ -7,10 +7,19 @@ local enableAddon = true
 
 local function displayDFReady()
     local windowParams = { "NoTitleBar", "NoResize", "NoMove", "NoInputs", "NoSavedSettings" }
+    local text = "DF Ready!"
+    local width, height = imgui.CalcTextSize(text)
+
+    local scale = 1.5
+    local windowWidth = width * scale + 20
+    local windowHeight = height * scale + 20
     local ps = lib_helpers.GetPosBySizeAndAnchor(0, 0, 100, -200, 5)
+
+    imgui.SetNextWindowSize(windowWidth, windowHeight, "Always")
     imgui.SetNextWindowPos(ps[1], ps[2], "Always")
-    imgui.Begin("DF Ready!", nil, windowParams)
-    imgui.TextColored(1.0, 1.0, 0.0, 1.0, "DF Ready!")
+    imgui.Begin(text, nil, windowParams)
+    imgui.SetWindowFontScale(scale)
+    imgui.TextColored(1.0, 1.0, 0.0, 1.0, text)
     imgui.End()
 end
 
