@@ -3,7 +3,7 @@
 Dark FlowのEXが使用可能になったことを通知します。
 
 ## インストール
-1. [DFReady](https://github.com/ephinea-teapot/psobb-DFReady/archive/refs/tags/v0.0.4.zip) をダウンロードします。
+1. [DFReady](https://github.com/ephinea-teapot/psobb-DFReady/archive/refs/tags/v0.0.5.zip) をダウンロードします。
 2. ダウンロードしたzipをEphineaのaddonsディレクトリに展開します (例: C:\Users\<自分のユーザー名>\EphineaPSO\addons)
 
 ## 試し方
