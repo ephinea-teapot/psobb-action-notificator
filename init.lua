@@ -13,7 +13,7 @@ local function displayDFReady()
     local scale = 1.5
     local windowWidth = width * scale + 20
     local windowHeight = height * scale + 20
-    local ps = lib_helpers.GetPosBySizeAndAnchor(0, 0, 100, -200, 5)
+    local ps = lib_helpers.GetPosBySizeAndAnchor(0, 0, windowWidth, -200, 5)
 
     imgui.SetNextWindowSize(windowWidth, windowHeight, "Always")
     imgui.SetNextWindowPos(ps[1], ps[2], "Always")
