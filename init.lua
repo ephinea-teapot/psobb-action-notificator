@@ -1,4 +1,5 @@
 local core_mainmenu = require("core_mainmenu")
+local lib_keys = require("solylib.keys")
 local lib_helpers = require("solylib.helpers")
 local lib_characters = require("solylib.characters")
 local lib_menu = require("solylib.menu")
@@ -99,6 +100,13 @@ local function present()
     Notificator.notify()
 end
 
+local function keyPressed(key)
+    -- control key
+    if key == 17 then
+        enableAddon = not enableAddon
+    end
+end
+
 local function init()
     local function mainMenuButtonHandler()
         if enableAddon == false then
@@ -115,7 +123,7 @@ local function init()
         author = "teapot",
         description = "For you who forget the shifta",
         present = present,
-        -- key_pressed = key_pressed,
+        key_pressed = keyPressed,
     }
 end
 
