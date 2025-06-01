@@ -53,6 +53,15 @@ local function presentDFReady()
     end
 end
 
+local function presentInv()
+    local address = lib_characters.GetSelf()
+    local invuln = lib_characters.GetPlayerInvulnerabilityStatus(address)
+    if invuln.time > 0 then
+        local str = string.format("Inv: %s", os.date("!%M:%S", invuln.time))
+        Notificator.add(Notification:new(str, Color(0.0, 1.0, 0.0)))
+    end
+end
+
 local function isInLobby()
     local _Location = 0x00AAFC9C
     local location = pso.read_u32(_Location + 0x04)
@@ -82,6 +91,7 @@ local function present()
     if shouldBeDisplay() ~= false then
         presentDFReady()
         presentNeedShifta()
+        presentInv()
     end
 
     -- notificator.add(Notification:new("Need Deband", Color(0.0, 0.4, 1.0)))
