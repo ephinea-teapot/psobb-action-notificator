@@ -53,11 +53,20 @@ local function presentDFReady()
     end
 end
 
+local function isInLobby()
+    local _Location = 0x00AAFC9C
+    local location = pso.read_u32(_Location + 0x04)
+    return location == 15
+end
+
 local function shouldBeDisplay()
     if lib_characters.GetCurrentFloorSelf() == 0 then
         return false
     end
     if lib_menu.IsMenuUnavailable() then
+        return false
+    end
+    if isInLobby() then
         return false
     end
     return true
