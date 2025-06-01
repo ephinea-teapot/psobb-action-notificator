@@ -87,14 +87,14 @@ local function init()
         enableAddon = not enableAddon
     end
 
-    core_mainmenu.add_button("DF Ready", mainMenuButtonHandler)
+    core_mainmenu.add_button("Action Notificator", mainMenuButtonHandler)
 
     return
     {
-        name = "DF Ready",
+        name = "Action Notificator",
         version = "0.0.1",
         author = "teapot",
-        description = "This is an add-on that tells you when Dark Flow's EX is ready to use.",
+        description = "For you who forget the shifta",
         present = present,
         -- key_pressed = key_pressed,
     }
