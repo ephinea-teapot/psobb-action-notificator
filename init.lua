@@ -3,7 +3,7 @@ local lib_helpers = require("solylib.helpers")
 local lib_characters = require("solylib.characters")
 local lib_menu = require("solylib.menu")
 local Notification = require("psobb-dfready.notification")
-local Notifyer = require("psobb-dfready.notifyer")
+local Notificator = require("psobb-dfready.notificator")
 
 local enableAddon = true
 
@@ -35,7 +35,7 @@ end
 local function presentNeedShifta()
     local msg = getNeedShiftaMessage()
     if msg == nil then return nil end
-    Notifyer.add(Notification:new(msg, Color(1.0, 0.0, 0.0)))
+    Notificator.add(Notification:new(msg, Color(1.0, 0.0, 0.0)))
 end
 
 local function presentDFReady()
@@ -48,7 +48,7 @@ local function presentDFReady()
         local hp = lib_characters.GetPlayerHP(playerAddr)
         local mhp = lib_characters.GetPlayerMaxHP(playerAddr)
         if 0 < hp and (hp / mhp) < 0.125 then
-            Notifyer.add(Notification:new("DF Ready!", Color(1.0, 1.0, 0.0)))
+            Notificator.add(Notification:new("DF Ready!", Color(1.0, 1.0, 0.0)))
         end
     end
 end
@@ -68,16 +68,16 @@ local function present()
         return
     end
 
-    Notifyer.start()
+    Notificator.start()
 
     if shouldBeDisplay() ~= false then
         presentDFReady()
         presentNeedShifta()
     end
 
-    -- Notifyer.add(Notification:new("Need Deband", Color(0.0, 0.4, 1.0)))
+    -- notificator.add(Notification:new("Need Deband", Color(0.0, 0.4, 1.0)))
 
-    Notifyer.notify()
+    Notificator.notify()
 end
 
 local function init()
