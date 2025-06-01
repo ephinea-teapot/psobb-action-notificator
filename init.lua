@@ -2,8 +2,8 @@ local core_mainmenu = require("core_mainmenu")
 local lib_helpers = require("solylib.helpers")
 local lib_characters = require("solylib.characters")
 local lib_menu = require("solylib.menu")
-local Notification = require("psobb-dfready.notification")
-local Notificator = require("psobb-dfready.notificator")
+local Notification = require("psobb-action-notificator.notification")
+local Notificator = require("psobb-action-notificator.notificator")
 
 local enableAddon = true
 
@@ -84,7 +84,7 @@ local function init()
     local function mainMenuButtonHandler()
         if enableAddon == false then
         end
-        enableAddon = not enableAddon
+        -- enableAddon = not enableAddon
     end
 
     core_mainmenu.add_button("Action Notificator", mainMenuButtonHandler)
