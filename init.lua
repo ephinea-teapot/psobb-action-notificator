@@ -2,25 +2,40 @@ local core_mainmenu = require("core_mainmenu")
 local lib_helpers = require("solylib.helpers")
 local lib_characters = require("solylib.characters")
 local lib_menu = require("solylib.menu")
+local Notification = require("psobb-dfready.notification")
+local Notifyer = require("psobb-dfready.notifyer")
 
 local enableAddon = true
 
-local function displayDFReady()
-    local windowParams = { "NoTitleBar", "NoResize", "NoMove", "NoInputs", "NoSavedSettings" }
-    local text = "DF Ready!"
-    local width, height = imgui.CalcTextSize(text)
+local function Color(r, g, b, a)
+    if a == nil then
+        a = 1.0
+    end
+    return { r = r, g = g, b = b, a = a }
+end
 
-    local scale = 1.5
-    local windowWidth = width * scale + 20
-    local windowHeight = height * scale + 20
-    local ps = lib_helpers.GetPosBySizeAndAnchor(0, 0, windowWidth, -200, 5)
+local function getNeedShiftaMessage()
+    local playerList = lib_characters.GetPlayerList()
+    if #playerList == 1 then
+        return nil
+    end
+    for i = 1, #playerList, 1 do
+        local address = playerList[i].address
+        local atkTech = lib_characters.GetPlayerTechniqueStatus(address, 0)
+        if atkTech.type == 0 then
+            return "Need Shifta!"
+        end
+        if atkTech.time <= 30 then
+            return string.format("Shifta expires at %d sec", atkTech.time)
+        end
+    end
+    return nil
+end
 
-    imgui.SetNextWindowSize(windowWidth, windowHeight, "Always")
-    imgui.SetNextWindowPos(ps[1], ps[2], "Always")
-    imgui.Begin(text, nil, windowParams)
-    imgui.SetWindowFontScale(scale)
-    imgui.TextColored(1.0, 1.0, 0.0, 1.0, text)
-    imgui.End()
+local function presentNeedShifta()
+    local msg = getNeedShiftaMessage()
+    if msg == nil then return nil end
+    Notifyer.add(Notification:new(msg, Color(1.0, 0.0, 0.0)))
 end
 
 local function presentDFReady()
@@ -33,22 +48,16 @@ local function presentDFReady()
         local hp = lib_characters.GetPlayerHP(playerAddr)
         local mhp = lib_characters.GetPlayerMaxHP(playerAddr)
         if 0 < hp and (hp / mhp) < 0.125 then
-            displayDFReady()
+            Notifyer.add(Notification:new("DF Ready!", Color(1.0, 1.0, 0.0)))
         end
     end
 end
 
 local function shouldBeDisplay()
-    if lib_menu.IsSymbolChatOpen() then
-        return true
-    end
-    if lib_menu.IsMenuOpen() then
-        return true
-    end
-    if lib_menu.IsMenuUnavailable() then
+    if lib_characters.GetCurrentFloorSelf() == 0 then
         return false
     end
-    if lib_characters.GetCurrentFloorSelf() == 0 then
+    if lib_menu.IsMenuUnavailable() then
         return false
     end
     return true
@@ -59,9 +68,16 @@ local function present()
         return
     end
 
+    Notifyer.start()
+
     if shouldBeDisplay() ~= false then
         presentDFReady()
+        presentNeedShifta()
     end
+
+    -- Notifyer.add(Notification:new("Need Deband", Color(0.0, 0.4, 1.0)))
+
+    Notifyer.notify()
 end
 
 local function init()
