@@ -16,27 +16,29 @@ local function Color(r, g, b, a)
 end
 
 local function getNeedShiftaMessage()
+    local messages = {}
     local playerList = lib_characters.GetPlayerList()
-    if #playerList == 1 then
-        return nil
-    end
     for i = 1, #playerList, 1 do
         local address = playerList[i].address
         local atkTech = lib_characters.GetPlayerTechniqueStatus(address, 0)
         if atkTech.type == 0 then
-            return "Need Shifta!"
+            table.insert(messages, lib_characters.GetPlayerName(address) .. " NEEDS SHIFTA!")
         end
-        if atkTech.time <= 30 then
-            return string.format("Shifta expires at %d sec", atkTech.time)
+        if 0 < atkTech.time and atkTech.time <= 30 then
+            local msg = string.format("SHIFTA expires in %i sec: %s",
+                atkTech.time,
+                lib_characters.GetPlayerName(address))
+            table.insert(messages, msg)
         end
     end
-    return nil
+    return messages
 end
 
 local function presentNeedShifta()
-    local msg = getNeedShiftaMessage()
-    if msg == nil then return nil end
-    Notificator.add(Notification:new(msg, Color(1.0, 0.0, 0.0)))
+    local msgs = getNeedShiftaMessage()
+    for _, msg in ipairs(msgs) do
+        Notificator.add(Notification:new(msg, Color(1.0, 0.0, 0.0)))
+    end
 end
 
 local function presentDFReady()

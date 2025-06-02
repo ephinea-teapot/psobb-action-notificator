@@ -1,5 +1,5 @@
 local windowParams = { "NoTitleBar", "NoResize", "NoMove", "NoInputs", "NoSavedSettings" }
-local fontScale = 4
+local fontScale = 2
 
 local function GetResolutionWidth()
     return pso.read_u32(pso.read_u32(0x82D140))
