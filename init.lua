@@ -41,18 +41,30 @@ local function presentNeedShifta()
     end
 end
 
+local function isHumarClass(class)
+    return (
+        class == 0 or -- Humar
+        class == 1 or -- Hunewerl
+        class == 2 or -- Hucast
+        class == 9 -- Hucaseal
+    )
+end
+
 local function presentDFReady()
     local _PlayerArray = 0x00A94254
     local _PlayerIndex = 0x00A9C4F4
     local playerIndex = pso.read_u32(_PlayerIndex)
     local playerAddr = pso.read_u32(_PlayerArray + 4 * playerIndex)
 
-    if playerAddr ~= 0 then
-        local hp = lib_characters.GetPlayerHP(playerAddr)
-        local mhp = lib_characters.GetPlayerMaxHP(playerAddr)
-        if 0 < hp and (hp / mhp) < 0.125 then
-            Notificator.add(Notification:new("DF Ready!", Color(1.0, 1.0, 0.0)))
-        end
+    if playerAddr == 0 then return nil end
+
+    local class = lib_characters.GetPlayerClass(playerAddr)
+    if not isHumarClass(class) then return nil end
+
+    local hp = lib_characters.GetPlayerHP(playerAddr)
+    local mhp = lib_characters.GetPlayerMaxHP(playerAddr)
+    if 0 < hp and (hp / mhp) < 0.125 then
+        Notificator.add(Notification:new("DF Ready!", Color(1.0, 1.0, 0.0)))
     end
 end
 
