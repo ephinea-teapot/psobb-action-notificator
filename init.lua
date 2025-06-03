@@ -22,12 +22,12 @@ local function getNeedShiftaMessage()
         local address = playerList[i].address
         local atkTech = lib_characters.GetPlayerTechniqueStatus(address, 0)
         if atkTech.type == 0 then
-            table.insert(messages, lib_characters.GetPlayerName(address) .. " NEEDS SHIFTA!")
+            table.insert(messages, string.format("%s needs a SHIFTA", lib_characters.GetPlayerName(address)))
         end
         if 0 < atkTech.time and atkTech.time <= 30 then
-            local msg = string.format("SHIFTA expires in %i sec: %s",
-                atkTech.time,
-                lib_characters.GetPlayerName(address))
+            local msg = string.format("%s's SHIFTA expires after %i sec",
+                lib_characters.GetPlayerName(address),
+                atkTech.time)
             table.insert(messages, msg)
         end
     end
@@ -46,7 +46,7 @@ local function isHumarClass(class)
         class == 0 or -- Humar
         class == 1 or -- Hunewerl
         class == 2 or -- Hucast
-        class == 9 -- Hucaseal
+        class == 9    -- Hucaseal
     )
 end
 
