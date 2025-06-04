@@ -15,6 +15,24 @@ local function Color(r, g, b, a)
     return { r = r, g = g, b = b, a = a }
 end
 
+local function isHumarClass(class)
+    return (
+        class == 0 or -- Humar
+        class == 1 or -- Hunewerl
+        class == 2 or -- Hucast
+        class == 9    -- Hucaseal
+    )
+end
+
+local function isForce(class)
+    return (
+        class == 6 or -- Fomarl
+        class == 7 or -- Fonewm
+        class == 8 or -- Fonewerl
+        class == 10   -- Fomar
+    )
+end
+
 local function getNeedShiftaMessage()
     local messages = {}
     local playerList = lib_characters.GetPlayerList()
@@ -35,19 +53,11 @@ local function getNeedShiftaMessage()
 end
 
 local function presentNeedShifta()
+    if not isForce() then return nil end
     local msgs = getNeedShiftaMessage()
     for _, msg in ipairs(msgs) do
         Notificator.add(Notification:new(msg, Color(1.0, 0.0, 0.0)))
     end
-end
-
-local function isHumarClass(class)
-    return (
-        class == 0 or -- Humar
-        class == 1 or -- Hunewerl
-        class == 2 or -- Hucast
-        class == 9    -- Hucaseal
-    )
 end
 
 local function presentDFReady()
